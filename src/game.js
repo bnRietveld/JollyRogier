@@ -33,8 +33,6 @@
     var scale = canvasWidth / designWidth;
     var mobile = false;
 
-    initTheEverything();
-
     // -----------------------------------------------------
     //            Interesting code goes here
     // -----------------------------------------------------
@@ -112,6 +110,8 @@
         // launch animation
         lastTime = window.perfNow() - 16;
         animate(window.perfNow());
+
+        initTheEverything();
     }
 
     function Volcano() {
@@ -1331,7 +1331,7 @@
     function mouseMove(e)
     {
         E(e);
-        if (ship) ship.swipe(e);
+        ship.swipe(e);
     }
 
     function mouseDown(e)
@@ -1353,13 +1353,13 @@
             return;
 
         I(e);
-        if (ship) ship.startSwipe(e);
+        ship.startSwipe(e);
     }
 
     function mouseUp(e)
     {
         J();
-        if (ship) ship.endSwipe();
+        ship.endSwipe();
     }
 
     var D = 2 * Math.PI, f = 0, p = 0, z = 200, B = 0.96, A = [], o, e, q, r, x, y, u, v, w;
