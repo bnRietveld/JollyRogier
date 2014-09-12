@@ -1331,7 +1331,7 @@
     function mouseMove(e)
     {
         E(e);
-        ship.swipe(e);
+        if (ship) ship.swipe(e);
     }
 
     function mouseDown(e)
@@ -1353,13 +1353,13 @@
             return;
 
         I(e);
-        ship.startSwipe(e);
+        if (ship) ship.startSwipe(e);
     }
 
     function mouseUp(e)
     {
         J();
-        ship.endSwipe();
+        if (ship) ship.endSwipe();
     }
 
     var D = 2 * Math.PI, f = 0, p = 0, z = 200, B = 0.96, A = [], o, e, q, r, x, y, u, v, w;
