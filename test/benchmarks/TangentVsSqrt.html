@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tangent vs Sqrt</title>
+    <script src="../../node_modules/benchmark/benchmark.js"></script>
+    <script src="../../src/bottom_line.js"></script>
+    <script>
+        var dx = 4.56;
+        var dy = 78.12;
+        var scalar = 264;
+
+        var suite = new Benchmark.Suite;
+        console.log(document.getElementsByTagName('title')[0].text+': running tests...');
+        // add tests
+        suite
+            .add('sqrt', function() {
+                var factor = scalar/Math.sqrt(dx*dx + dy*dy);
+            })
+            .add('sin atan', function() {
+                var factor = scalar/(dx/Math.sin(Math.atan(dx/dy)));
+            })
+            // add listeners
+            .on('cycle', function(event) {
+                console.log(String(event.target));
+            })
+            .on('complete', function() {
+                console.log('Fastest is ' + this.filter('fastest').pluck('name'));
+            })
+            // run async
+            .run({ 'async': true });
+    </script>
+</head>
+<body>
+</body>
+</html>

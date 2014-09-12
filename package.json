@@ -1,0 +1,27 @@
+{
+  "name": "js13K",
+  "version": "0.1.0",
+  "description": "Vikings: Strange icebergs",
+  "repository": {
+    "type": "git",
+    "url": "https://bitbucket.org/rogier_geertzema/js13k.git"
+  },
+  "devDependencies": {
+    "karma": "latest",
+    "karma-mocha": "latest",
+    "karma-chai-plugins": "latest",
+    "karma-coverage": "latest",
+    "karma-chrome-launcher": "latest",
+    "karma-phantomjs-launcher": "latest",
+    "benchmark": "latest",
+    "gulp-jscrush": "latest",
+    "gulp": "latest",
+    "gulp-uglify": "^0.3.1",
+    "gulp-closure-compiler-service": "^0.1.2",
+    "gulp-debug": "~1.0.0",
+    "run-sequence": "~0.3.6"
+  },
+  "scripts": {
+    "postinstall": "bower install"
+  }
+}

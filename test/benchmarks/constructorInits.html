@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Constructor inits</title>
+    <script src="../../node_modules/benchmark/benchmark.js"></script>
+    <script src="../../src/bottom_line.js"></script>
+    <script>
+        var init = function() {};
+
+        var suite = new Benchmark.Suite;
+        console.log(document.getElementsByTagName('title')[0].text+': running tests...');
+        // add tests
+        suite
+            .add('&& condition', function() {
+                init && init();
+            })
+            .add('if condition', function() {
+                if(init) init();
+            })
+            .add('no condition', function() {
+                init()
+            })
+            .add('no function', function() {
+                if(init) {}
+            })
+            // add listeners
+            .on('cycle', function(event) {
+                console.log(String(event.target));
+            })
+            .on('complete', function() {
+                console.log('Fastest is ' + this.filter('fastest').pluck('name'));
+            })
+            // run async
+            .run({ 'async': true });
+    </script>
+</head>
+<body>
+</body>
+</html>

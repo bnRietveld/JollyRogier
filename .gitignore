@@ -1,0 +1,20 @@
+#ignored folders
+.idea/
+.archive/
+.coverage/
+.sass-cache/
+node_modules/
+bower_components/
+projectFilesBackup/
+/docs/
+/dist/
+Backup/
+npm-debug.log
+*.DS_Store*
+assets/images/animations/
+assets/images/spritesheets/
+assets/images/icons/
+assets/images/misc/
+
+#ignored file types
+*.map

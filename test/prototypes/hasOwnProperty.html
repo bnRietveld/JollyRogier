@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>hasOwnProperty</title>
+    <script src="../../node_modules/benchmark/benchmark.js"></script>
+    <script src="../../dist/bottom_line.js"></script>
+    <script>
+        var obj = {
+            monkey: 'skull'
+        };
+
+        Object.defineProperty(obj, 'aap', {value: 'gorilla', enumerable: false, configurable: false, writable:false});
+        Object.defineProperty(obj, 'aapje', {get: function() {return this.monkey}, set: function(val) {monkey = val}, enumerable: false, configurable: false});
+
+        console.log(obj.aap);
+        console.log(obj.hasOwnProperty('aap'));
+        console.log(obj.hasOwnProperty('aapje'));
+    </script>
+</head>
+<body>
+</body>
+</html>

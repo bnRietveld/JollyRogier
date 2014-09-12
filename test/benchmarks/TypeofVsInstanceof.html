@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>typeof vs Instanceof</title>
+    <script src="../../node_modules/benchmark/benchmark.js"></script>
+    <script src="../../src/bottom_line.js"></script>
+    <script>
+        var suite = new Benchmark.Suite;
+        console.log(document.getElementsByTagName('title')[0].text+': running tests...');
+        // add tests
+        suite
+            .add('typeof', function() {
+                typeof 6 === 'number';
+                typeof NaN === 'number';
+                typeof Infinity === 'number';
+                typeof 's' === 'string';
+                typeof []==='object'; // counter intuitive
+                typeof {}==='object';
+                typeof function(){}==='function';
+                typeof null==='object'; // counter intuitive. Although only objects can have the value null...
+                typeof undefined==='undefined';
+            })
+            .add('_.typeOf', function() {
+                _.typeOf(6) === 'number';
+                _.typeOf(NaN)==='number';
+                _.typeOf(Infinity)==='number';
+                _.typeOf('s')==='string';
+                _.typeOf([])==='array';
+                _.typeOf({})==='object';
+                _.typeOf(function(){})==='function';
+                _.typeOf(null)==='null';
+                _.typeOf(undefined)==='undefined';
+            })
+            .add('instanceof', function() {
+                6 instanceof Number;
+                NaN instanceof Number;
+                Infinity instanceof Number;
+                's' instanceof String;
+                [] instanceof Array; // counter intuitive
+                ({}) instanceof Object;
+                (function(){}) instanceof Function;
+                null instanceof Object;
+                undefined instanceof Object;
+            })
+            // add listeners
+            .on('cycle', function(event) {
+                console.log(String(event.target));
+            })
+            .on('complete', function() {
+                console.log('Fastest is ' + this.filter('fastest').pluck('name'));
+            })
+            // run async
+            .run({ 'async': true });
+    </script>
+</head>
+<body>
+</body>
+</html>

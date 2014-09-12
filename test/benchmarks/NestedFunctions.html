@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Nested function</title>
+    <script src="../../node_modules/benchmark/benchmark.js"></script>
+    <script src="../../src/bottom_line.js"></script>
+    <script>
+        function nestednamed(x)
+        {
+            return named(x);
+
+            function named(x) {
+                return x*2;
+            }
+        }
+
+        function nestednamedvar(x)
+        {
+            var named = function named(x) {
+                return x*2;
+            };
+
+            return named(x);
+        }
+
+        function nestedvar(x)
+        {
+            var named = function (x) {
+                return x*2;
+            };
+
+            return named(x);
+        }
+
+        function nestedanom(x)
+        {
+            return (function(x) {
+                return x*2;
+            })(x);
+        }
+
+        function unnested(x)
+        {
+            return inner(x);
+        }
+
+        function inner(x) {
+            return x*2;
+        }
+
+        var suite = new Benchmark.Suite;
+        console.log(document.getElementsByTagName('title')[0].text+': running tests...');
+        // add tests
+        suite
+            .add('named nested', function() {
+                nestednamed(333);
+            })
+            .add('nested var', function() {
+                nestedvar(333);
+            })
+            .add('named nested var', function() {
+                nestednamedvar(333);
+            })
+            .add('nested anomymous', function() {
+                nestedanom(333);
+            })
+            .add('non-nested', function() {
+                unnested(333);
+            })
+            // add listeners
+            .on('cycle', function(event) {
+                console.log(String(event.target));
+            })
+            .on('complete', function() {
+                console.log('Fastest is ' + this.filter('fastest').pluck('name'));
+            })
+            // run async
+            .run({ 'async': true });
+    </script>
+</head>
+<body>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>hasOwnProperty vs in vs !undefined</title>
+    <script src="../../node_modules/benchmark/benchmark.js"></script>
+    <script src="../../src/bottom_line.js"></script>
+    <script>
+        var superProto = Object.create(Object.prototype);
+        var proto      = Object.create(superProto);
+        var obj        = Object.create(proto);
+        var member;
+
+        Object.defineProperty(obj, 'a1', {value: 'a1', enumerable: true});
+        Object.defineProperty(obj, 'b1', {value: 'b1', enumerable: false});
+        Object.defineProperty(obj, 'c1', {value: 'c1', enumerable: false});
+        Object.defineProperty(proto, 'a2', {value: 'a2', enumerable: true});
+        Object.defineProperty(proto, 'b2', {value: 'b2', enumerable: false});
+        Object.defineProperty(superProto, 'a3', {value: 'a3', enumerable: true});
+        Object.defineProperty(superProto, 'b3', {value: 'b3', enumerable: false});
+
+        var suite = new Benchmark.Suite;
+        console.log(document.getElementsByTagName('title')[0].text+': running tests...');
+        // add tests
+        suite
+            .add('obj.hasOwnProperty(prop): prop is #3', function() {
+                member = obj.hasOwnProperty('c1');
+            })
+            .add('prop in obj: depth = 1', function() {
+                member = 'c1' in obj;
+            })
+            .add('not undefined: depth 1', function() {
+                member = obj['c1'] !== undefined;
+            })
+            .add('boolean checking!! depth 1', function() {
+                member = !!obj['c1'];
+            })
+            .add('prop in obj: depth = 3', function() {
+                member = 'a3' in obj;
+            })
+            .add('not undefined: depth 3', function() {
+                member = obj['a3'] !== undefined;
+            })
+            .add('boolean checking!! depth 3', function() {
+                member = !!obj['a3'];
+            })
+            // add listeners
+            .on('cycle', function(event) {
+                console.log(String(event.target));
+            })
+            .on('complete', function() {
+                console.log('Fastest is ' + this.filter('fastest').pluck('name'));
+            })
+            // run async
+            .run({ 'async': true });
+    </script>
+</head>
+<body>
+</body>
+</html>

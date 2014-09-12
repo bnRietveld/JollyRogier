@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Arguments in memory?</title>
+    <script>
+        // not a real benchmark but to test memory management for arguments
+        (function zwar() {
+            var noargs;
+
+            var args = arguments;
+
+            return 'zombie';
+        })();
+    </script>
+</head>
+<body>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Fast max</title>
+    <script src="../../node_modules/benchmark/benchmark.js"></script>
+    <script src="../../src/bottom_line.js"></script>
+    <!--<script src="../../src/bottom_line.old.js"></script>-->
+    <script>
+
+        function maxHomeMade()
+        {
+            for (var i = 1, max = 0, len = arguments.length; i < len; i++)
+            {
+                if (arguments[max] < arguments[i])
+                {
+                    max = i;
+                }
+            }
+
+            return arguments[max];
+        }
+
+        function max2(num1, num2) {
+            return (num1 > num2)? num1 : num2;
+        }
+
+        var suite = new Benchmark.Suite;
+        console.log(document.getElementsByTagName('title')[0].text+': running tests...');
+        // add tests
+        suite
+            .add('Math.max', function() {
+                Math.max(0.45,  45.56);
+                Math.max(45.56, 0.45);
+            })
+            .add('maxHomeMade', function() {
+                maxHomeMade(0.45,  45.56);
+                maxHomeMade(45.56, 0.45);
+            })
+            .add('max2', function() {
+                max2(0.45,  45.56);
+                max2(45.56, 0.45);
+            })
+            // add listeners
+            .on('cycle', function(event) {
+                console.log(String(event.target));
+            })
+            .on('complete', function() {
+                console.log('Fastest is ' + this.filter('fastest').pluck('name'));
+            })
+            // run async
+            .run({ 'async': true });
+    </script>
+</head>
+<body>
+</body>
+</html>
